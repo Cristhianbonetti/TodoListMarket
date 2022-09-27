@@ -9,13 +9,11 @@ import 'package:todomobx/widgets/custom_text_field.dart';
 import 'login_screen.dart';
 
 class ListScreen extends StatefulWidget {
-
   @override
   _ListScreenState createState() => _ListScreenState();
 }
 
 class _ListScreenState extends State<ListScreen> {
-
   final ListStore listStore = ListStore();
 
   final TextEditingController controller = TextEditingController();
@@ -30,26 +28,26 @@ class _ListScreenState extends State<ListScreen> {
           child: Column(
             children: <Widget>[
               Padding(
-                padding: const EdgeInsets.symmetric(vertical: 16, horizontal: 2),
+                padding:
+                    const EdgeInsets.symmetric(vertical: 16, horizontal: 2),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: <Widget>[
                     Text(
-                      'Tarefas',
+                      'Lista de Compras',
                       style: TextStyle(
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
-                          fontSize: 32
-                      ),
+                          fontSize: 26),
                     ),
                     IconButton(
                       icon: Icon(Icons.exit_to_app),
                       color: Colors.white,
-                      onPressed: (){
-                        Provider.of<LoginStore>(context, listen: false).logout();
-                        Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (context)=>LoginScreen())
-                        );
+                      onPressed: () {
+                        Provider.of<LoginStore>(context, listen: false)
+                            .logout();
+                        Navigator.of(context).pushReplacement(MaterialPageRoute(
+                            builder: (context) => LoginScreen()));
                       },
                     ),
                   ],
@@ -66,55 +64,71 @@ class _ListScreenState extends State<ListScreen> {
                     child: Column(
                       children: <Widget>[
                         Observer(
-                          builder: (_){
+                          builder: (_) {
                             return CustomTextField(
                               controller: controller,
-                              hint: 'Tarefa',
+                              hint: 'Item',
                               onChanged: listStore.setNewTodoTitle,
-                              suffix: listStore.isFormValid ? CustomIconButton(
-                                radius: 32,
-                                iconData: Icons.add,
-                                onTap: (){
-                                  listStore.addTodo();
-                                  WidgetsBinding.instance.addPostFrameCallback(
-                                    (_) => controller.clear()
-                                  );
-                                },
-                              ) : null,
+                              suffix: listStore.isFormValid
+                                  ? CustomIconButton(
+                                      radius: 32,
+                                      iconData: Icons.add,
+                                      onTap: () {
+                                        listStore.addTodo();
+                                        WidgetsBinding.instance
+                                            .addPostFrameCallback(
+                                                (_) => controller.clear());
+                                      },
+                                    )
+                                  : null,
                             );
                           },
                         ),
-                        const SizedBox(height: 8,),
+                        const SizedBox(
+                          height: 8,
+                        ),
                         Expanded(
                           child: Observer(
-                            builder: (_){
+                            builder: (_) {
                               return ListView.separated(
                                 itemCount: listStore.todoList.length,
-                                itemBuilder: (_, index){
+                                itemBuilder: (_, index) {
                                   final todo = listStore.todoList[index];
                                   return Observer(
-                                    builder: (_){
+                                    builder: (_) {
                                       return ListTile(
                                         title: Text(
                                           todo.title,
                                           style: TextStyle(
-                                            decoration: todo.done ?
-                                              TextDecoration.lineThrough : null,
-                                            color: todo.done ?
-                                              Colors.grey : Colors.black
-                                          ),
+                                              decoration: todo.done
+                                                  ? TextDecoration.lineThrough
+                                                  : null,
+                                              color: todo.done
+                                                  ? Colors.grey
+                                                  : Colors.black),
                                         ),
                                         onTap: todo.toggleDone,
                                       );
                                     },
                                   );
                                 },
-                                separatorBuilder: (_, __){
+                                separatorBuilder: (_, __) {
                                   return Divider();
                                 },
                               );
                             },
                           ),
+                        ),
+                        IconButton(
+                          icon: Icon(Icons.exit_to_app),
+                          color: Colors.white,
+                          onPressed: () {
+                            Provider.of<LoginStore>(context, listen: false)
+                                .logout();
+                            Navigator.of(context).pushReplacement(
+                                MaterialPageRoute(
+                                    builder: (context) => LoginScreen()));
+                          },
                         ),
                       ],
                     ),

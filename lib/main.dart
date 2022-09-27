@@ -6,7 +6,6 @@ import 'package:todomobx/stores/login_store.dart';
 void main() => runApp(MyApp());
 
 class MyApp extends StatelessWidget {
-
   @override
   Widget build(BuildContext context) {
     return Provider<LoginStore>(
@@ -15,9 +14,9 @@ class MyApp extends StatelessWidget {
         title: 'MobX Tutorial',
         debugShowCheckedModeBanner: false,
         theme: ThemeData(
-          primaryColor: Colors.deepPurpleAccent,
-          cursorColor: Colors.deepPurpleAccent,
-          scaffoldBackgroundColor: Colors.deepPurpleAccent,
+          primaryColor: Colors.red,
+          cursorColor: Colors.red,
+          scaffoldBackgroundColor: Colors.red,
         ),
         home: LoginScreen(),
       ),
